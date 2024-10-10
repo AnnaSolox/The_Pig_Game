@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Fondo de la vista -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/brown" />
+        </shape>
+    </item>
+
+    <!-- Borde superior -->
+    <item android:top="3dp" android:bottom="0dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/beige"/> <!-- Color del borde -->
+            <size android:height="2dp" /> <!-- Grosor del borde -->
+        </shape>
+    </item>
+
+</layer-list>
