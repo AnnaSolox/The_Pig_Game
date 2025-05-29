@@ -4,16 +4,16 @@ plugins {
 
 android {
     namespace = "com.example.thepiggame"
-    compileSdk = 34
+    compileSdk = 35
 
     buildFeatures {
-        viewBinding = true;
+        viewBinding = true
     }
 
     defaultConfig {
         applicationId = "com.example.thepiggame"
         minSdk = 27
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 

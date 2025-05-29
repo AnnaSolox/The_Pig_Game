@@ -1,13 +1,11 @@
 package com.example.thepiggame;
 
-import android.animation.Animator;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -34,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     TextView ganadorJ1;
     TextView ganadorJ2;
     TextView ganadorSeleccionado;
-    Toast textoEmergente;
 
 
     @Override
@@ -49,14 +46,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
         setContentView((binding = ActivityMainBinding.inflate(getLayoutInflater())).getRoot());
-        jugador1 = findViewById(R.id.puntosJ1);
-        jugador2 = findViewById(R.id.puntosJ2);
 
-        dadoJ1 = findViewById(R.id.numDadoJ1);
-        dadoJ2 = findViewById(R.id.numDadoJ2);
+        jugador1 = binding.puntosJ1;
+        jugador2 = binding.puntosJ2;
 
-        ganadorJ1 = findViewById(R.id.ganadorJ1);
-        ganadorJ2 = findViewById(R.id.ganadorJ2);
+        dadoJ1 = binding.numDadoJ1;
+        dadoJ2 = binding.numDadoJ2;
+
+        ganadorJ1 = binding.ganadorJ1;
+        ganadorJ2 = binding.ganadorJ2;
 
         seleccionarJ1();
 
@@ -64,28 +62,17 @@ public class MainActivity extends AppCompatActivity {
 
         mapaDado();
 
-        binding.btnLanzar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                numeroDado = random();
-                actualizarDatos(numeroDado);
-            }
+        binding.btnLanzar.setOnClickListener(view -> {
+            numeroDado = random();
+            actualizarDatos(numeroDado);
         });
 
-        binding.btnPasar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "¡Buen turno!", Toast.LENGTH_SHORT).show();
-                cambiarJugador();
-            }
+        binding.btnPasar.setOnClickListener(view -> {
+            Toast.makeText(MainActivity.this, "¡Buen turno!", Toast.LENGTH_SHORT).show();
+            cambiarJugador();
         });
 
-        binding.reiniciar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                reiniciar();
-            }
-        });
+        binding.reiniciar.setOnClickListener(view -> reiniciar());
 
     }
 
@@ -118,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 .filter(values -> values.getValue() == numeroDado)
                 .map(Map.Entry::getKey)
                 .findFirst()
-                .orElse(null);
+                .orElse(0);
 
         binding.dado.setImageResource(dado);
 
@@ -126,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Has sacado un 1. Pierdes el turno", Toast.LENGTH_SHORT).show();
             dadoSeleccionado.setText("1");
             jugadorSeleccionado.setText("0");
-            contadorSeleccionado.valor=0;
+            contadorSeleccionado.valor = 0;
             animacion();
             cambiarJugador();
         } else {
@@ -188,10 +175,12 @@ public class MainActivity extends AppCompatActivity {
         seleccionarJ1();
     }
 
-    /** Mostrar ganador **/
-    private void ganar(){
+    /**
+     * Mostrar ganador
+     **/
+    private void ganar() {
         ganadorSeleccionado.setVisibility(View.VISIBLE);
-        if (ganadorSeleccionado == ganadorJ1){
+        if (ganadorSeleccionado == ganadorJ1) {
             Toast.makeText(MainActivity.this, "¡Ha ganado el Jugador 1!", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(MainActivity.this, "¡Ha ganado el Jugador 2!", Toast.LENGTH_SHORT).show();
@@ -210,25 +199,17 @@ public class MainActivity extends AppCompatActivity {
         binding.dado.animate()
                 .alpha(1f)
                 .setDuration(300)
-                .withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        binding.dado.animate()
-                                .alpha(0f)
-                                .setDuration(300)
-                                .withEndAction(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        binding.dado.setImageResource(R.drawable.dice_one);
-                                        binding.dado.setAlpha(0f);
+                .withEndAction(() -> binding.dado.animate()
+                        .alpha(0f)
+                        .setDuration(300)
+                        .withEndAction(() -> {
+                            binding.dado.setImageResource(R.drawable.dice_one);
+                            binding.dado.setAlpha(0f);
 
-                                        binding.dado.animate()
-                                                .alpha(1f)
-                                                .setDuration(100);
-                                    }
-                                });
-                    }
-                });
+                            binding.dado.animate()
+                                    .alpha(1f)
+                                    .setDuration(100);
+                        }));
     }
 
 }
