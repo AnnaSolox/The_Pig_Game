@@ -55,3 +55,15 @@ com.example.thepiggame/
 4. ¡Diviértete lanzando dados y ganando partidas!
 
 ---
+
+---
+
+## Licencia
+Diseñado y desarrollado por AnnaSolox en 2025.
+
+Este proyecto está bajo la licencia [MIT License](./LICENSE.md).
+Puedes usar, copiar, modificar y distribuir este software libremente, pero sin garantía alguna.
+El autor no se hace responsable de ningún daño o problema que pueda surgir del uso de este software.
+
+Puedes encontrar una copia de la licencia en
+https://opensource.org/license/mit
