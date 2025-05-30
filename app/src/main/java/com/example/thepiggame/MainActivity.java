@@ -1,8 +1,9 @@
 package com.example.thepiggame;
 
+import static android.widget.Toast.LENGTH_SHORT;
+
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -12,26 +13,14 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.thepiggame.databinding.ActivityMainBinding;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.example.thepiggame.logic.ControladorJuego;
+import com.example.thepiggame.model.Jugador;
+import com.example.thepiggame.util.Dado;
 
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
-    int numeroDado;
-    Contador contadorJ1 = new Contador(0);
-    Contador contadorJ2 = new Contador(0);
-    Contador contadorSeleccionado;
-    TextView jugador1;
-    TextView jugador2;
-    TextView jugadorSeleccionado;
-    TextView dadoJ1;
-    TextView dadoJ2;
-    TextView dadoSeleccionado;
-    TextView ganadorJ1;
-    TextView ganadorJ2;
-    TextView ganadorSeleccionado;
+    ControladorJuego controlador;
 
 
     @Override
@@ -47,169 +36,114 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView((binding = ActivityMainBinding.inflate(getLayoutInflater())).getRoot());
 
-        jugador1 = binding.puntosJ1;
-        jugador2 = binding.puntosJ2;
+        controlador = new ControladorJuego();
+        actualizarUi(null, false);
 
-        dadoJ1 = binding.numDadoJ1;
-        dadoJ2 = binding.numDadoJ2;
-
-        ganadorJ1 = binding.ganadorJ1;
-        ganadorJ2 = binding.ganadorJ2;
-
-        seleccionarJ1();
-
-        Toast.makeText(MainActivity.this, "Empieza el Jugador 1", Toast.LENGTH_SHORT).show();
-
-        mapaDado();
-
-        binding.btnLanzar.setOnClickListener(view -> {
-            numeroDado = random();
-            actualizarDatos(numeroDado);
-        });
+        binding.btnLanzar.setOnClickListener(view -> lanzarDado());
 
         binding.btnPasar.setOnClickListener(view -> {
-            Toast.makeText(MainActivity.this, "¡Buen turno!", Toast.LENGTH_SHORT).show();
-            cambiarJugador();
+            controlador.cambiarJugador();
+            actualizarUi(null, false);
         });
 
-        binding.reiniciar.setOnClickListener(view -> reiniciar());
+        binding.reiniciar.setOnClickListener(view -> reiniciarJuego());
 
     }
 
-    /**
-     * Método para crear el HashMap con los dados y su valor asocialdo
-     **/
-    private static HashMap<Integer, Integer> mapaDado() {
-        HashMap<Integer, Integer> mapaDado = new HashMap<>();
-        mapaDado.put(R.drawable.dice_one, 1);
-        mapaDado.put(R.drawable.dice_two, 2);
-        mapaDado.put(R.drawable.dice_three, 3);
-        mapaDado.put(R.drawable.dice_four, 4);
-        mapaDado.put(R.drawable.dice_five, 5);
-        mapaDado.put(R.drawable.dice_six, 6);
-        return mapaDado;
-    }
+    private void lanzarDado() {
+        int resutado = Dado.lanzarDado();
+        binding.dado.setImageResource(Dado.obtenerDado(resutado));
+        Jugador lanzador = controlador.getJugadorActual();
 
-    /**
-     * Generar el valor del dado al lanzar
-     **/
-    private int random() {
-        return (int) (Math.random() * 6) + 1;
-    }
+        boolean seguir = resutado != 1;
 
-    /**
-     * Actualizar datos
-     **/
-    private void actualizarDatos(int numeroDado) {
-        int dado = mapaDado().entrySet().stream()
-                .filter(values -> values.getValue() == numeroDado)
-                .map(Map.Entry::getKey)
-                .findFirst()
-                .orElse(0);
-
-        binding.dado.setImageResource(dado);
-
-        if (numeroDado == 1) {
-            Toast.makeText(MainActivity.this, "Has sacado un 1. Pierdes el turno", Toast.LENGTH_SHORT).show();
-            dadoSeleccionado.setText("1");
-            jugadorSeleccionado.setText("0");
-            contadorSeleccionado.valor = 0;
-            animacion();
-            cambiarJugador();
-        } else {
-            contadorSeleccionado.valor += numeroDado;
-            dadoSeleccionado.setText(String.valueOf(numeroDado));
-            jugadorSeleccionado.setText(String.valueOf(contadorSeleccionado.valor));
-            if (contadorSeleccionado.valor >= 100) {
-                ganar();
-                binding.btnLanzar.setClickable(false);
-                binding.btnPasar.setClickable(false);
+        if (seguir) {
+            controlador.sumarPuntos(resutado);
+            actualizarUi(lanzador, false);
+            if (controlador.hayGanador()) {
+                mostrarGanador();
             }
-        }
-    }
-
-    /**
-     * Cambiar jugador
-     **/
-    private void cambiarJugador() {
-        if (contadorSeleccionado == contadorJ1) {
-            seleccionarJ2();
-            Toast.makeText(MainActivity.this, "Turno del jugador 2", Toast.LENGTH_SHORT).show();
         } else {
-            seleccionarJ1();
-            Toast.makeText(MainActivity.this, "Turno del jugador 1", Toast.LENGTH_SHORT).show();
+            animacionError();
+            controlador.cambiarJugador();
+            actualizarUi(lanzador, false);
         }
     }
 
-    private void seleccionarJ1() {
-        contadorSeleccionado = contadorJ1;
-        jugadorSeleccionado = jugador1;
-        dadoSeleccionado = dadoJ1;
-        ganadorSeleccionado = ganadorJ1;
-        binding.noJuega1.setVisibility(View.INVISIBLE);
-        binding.noJuega2.setVisibility(View.VISIBLE);
-    }
+    private void actualizarUi(Jugador jugadorQueLanzo, boolean reiniciar) {
+        Jugador j1 = controlador.getJugador1();
+        Jugador j2 = controlador.getJugador2();
+        Jugador actual = controlador.getJugadorActual();
 
-    public void seleccionarJ2() {
-        contadorSeleccionado = contadorJ2;
-        jugadorSeleccionado = jugador2;
-        dadoSeleccionado = dadoJ2;
-        ganadorSeleccionado = ganadorJ2;
-        binding.noJuega1.setVisibility(View.VISIBLE);
-        binding.noJuega2.setVisibility(View.INVISIBLE);
-    }
+        int valorDado = Dado.getUltimoValor();
 
-    /**
-     * Reiniciar el juego
-     **/
-    private void reiniciar() {
-        contadorJ1.valor = contadorJ2.valor = 0;
-        jugador1.setText("0");
-        jugador2.setText("0");
-        dadoJ1.setText("0");
-        dadoJ2.setText("0");
-        ganadorSeleccionado.setVisibility(View.INVISIBLE);
-        binding.btnLanzar.setClickable(true);
-        binding.btnPasar.setClickable(true);
+        binding.puntosJ1.setText(String.valueOf(j1.getPuntuacion()));
+        binding.puntosJ2.setText(String.valueOf(j2.getPuntuacion()));
 
-        seleccionarJ1();
-    }
-
-    /**
-     * Mostrar ganador
-     **/
-    private void ganar() {
-        ganadorSeleccionado.setVisibility(View.VISIBLE);
-        if (ganadorSeleccionado == ganadorJ1) {
-            Toast.makeText(MainActivity.this, "¡Ha ganado el Jugador 1!", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(MainActivity.this, "¡Ha ganado el Jugador 2!", Toast.LENGTH_SHORT).show();
+        if(reiniciar){
+            valorDado = 0;
+            binding.numDadoJ1.setText(String.valueOf(valorDado));
+            binding.numDadoJ2.setText(String.valueOf(valorDado));
+            binding.ganadorJ1.setVisibility(View.INVISIBLE);
+            binding.ganadorJ2.setVisibility(View.INVISIBLE);
+        } else if (jugadorQueLanzo != null) {
+            if(jugadorQueLanzo == j1){binding.numDadoJ1.setText(String.valueOf(valorDado));}
+            else{binding.numDadoJ2.setText(String.valueOf(valorDado));}
         }
 
-        Toast.makeText(MainActivity.this, "Haz clic en el botón de reiniciar para empezar otra partida", Toast.LENGTH_SHORT).show();
+        binding.noJuega1.setVisibility(actual ==j1 ?View.INVISIBLE :View.VISIBLE);
+        binding.noJuega2.setVisibility(actual ==j2 ?View.INVISIBLE :View.VISIBLE);
+}
+
+private void reiniciarJuego() {
+    controlador.reiniciarJuego();
+    binding.btnLanzar.setEnabled(true);
+    binding.btnPasar.setEnabled(true);
+    binding.dado.setImageResource(R.drawable.dice_one);
+    actualizarUi(null, true);
+}
+
+private void mostrarGanador() {
+    binding.btnLanzar.setEnabled(false);
+    binding.btnPasar.setEnabled(false);
+    int numeroJugador = (controlador.getJugadorActual() == controlador.getJugador1()) ? 1 : 2;
+    String mensaje = getString(R.string.mensaje_ganador, numeroJugador);
+
+    switch (numeroJugador){
+        case 1 : {
+            binding.ganadorJ1.setVisibility(View.VISIBLE);
+            break;
+        }
+        case 2 : {
+            binding.ganadorJ2.setVisibility(View.VISIBLE);
+            break;
+        }
     }
 
-    /**
-     * Animación dado error
-     **/
-    public void animacion() {
-        binding.dado.setAlpha(0f);
-        binding.dado.setImageResource(R.drawable.dice_one_error);
+    Toast.makeText(this, mensaje, LENGTH_SHORT).show();
+}
 
-        binding.dado.animate()
-                .alpha(1f)
-                .setDuration(300)
-                .withEndAction(() -> binding.dado.animate()
-                        .alpha(0f)
-                        .setDuration(300)
-                        .withEndAction(() -> {
-                            binding.dado.setImageResource(R.drawable.dice_one);
-                            binding.dado.setAlpha(0f);
+/**
+ * Animación dado error
+ **/
+public void animacionError() {
+    binding.dado.setAlpha(0f);
+    binding.dado.setImageResource(R.drawable.dice_one_error);
 
-                            binding.dado.animate()
-                                    .alpha(1f)
-                                    .setDuration(100);
-                        }));
-    }
+    binding.dado.animate()
+            .alpha(1f)
+            .setDuration(300)
+            .withEndAction(() -> binding.dado.animate()
+                    .alpha(0f)
+                    .setDuration(300)
+                    .withEndAction(() -> {
+                        binding.dado.setImageResource(R.drawable.dice_one);
+                        binding.dado.setAlpha(0f);
+
+                        binding.dado.animate()
+                                .alpha(1f)
+                                .setDuration(100);
+                    }));
+}
 
 }

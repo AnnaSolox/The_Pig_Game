@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">The Pig Game</string>
+    <string name="app_name" translatable="false">The Pig Game</string>
+    <string name="reload_icon_content_description">icono reiniciar</string>
+    <string name="text_pasar_btn">PASAR</string>
+    <string name="text_lanzar_btn">LANZAR</string>
+    <string name="text_jugador_2_btn">JUGADOR 2</string>
+    <string name="ganador_text">GANADOR</string>
+    <string name="text_jugador_1_btn">JUGADOR 1</string>
+    <string name="imagen_dado_content_description">imagen dado</string>
+    <string name="mensaje_ganador">¡Ha ganado el jugador %1$d!</string>
 </resources>

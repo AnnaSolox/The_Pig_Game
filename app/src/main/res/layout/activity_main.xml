@@ -73,6 +73,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/dice_one"
+        android:contentDescription="@string/imagen_dado_content_description"
         app:layout_constraintBottom_toBottomOf="@id/solidoJugador2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -87,9 +88,9 @@
         android:backgroundTint="@color/beige"
         android:clickable="false"
         android:fontFamily="@font/gilroy_medium"
-        android:text="JUGADOR 1"
+        android:text="@string/text_jugador_1_btn"
         android:textColor="@color/brown"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@id/puntosJ1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -102,7 +103,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/gilroy_medium"
-        android:text="GANADOR"
+        android:text="@string/ganador_text"
         android:textAlignment="center"
         android:textColor="@color/dark_pink"
         android:textSize="30sp"
@@ -124,7 +125,8 @@
         app:layout_constraintBottom_toTopOf="@id/dado"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnJ1" />
+        app:layout_constraintTop_toBottomOf="@id/btnJ1"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/numDadoJ1"
@@ -139,7 +141,8 @@
         app:layout_constraintStart_toEndOf="@id/dado"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/noJuega1"
-        app:layout_constraintHorizontal_bias=".2"/>
+        app:layout_constraintHorizontal_bias=".2"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/puntosJ2"
@@ -153,14 +156,15 @@
         app:layout_constraintBottom_toTopOf="@id/btnJ2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dado" />
+        app:layout_constraintTop_toBottomOf="@id/dado"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/ganadorJ2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/gilroy_medium"
-        android:text="GANADOR"
+        android:text="@string/ganador_text"
         android:textAlignment="center"
         android:textColor="@color/dark_pink"
         android:textSize="30sp"
@@ -183,7 +187,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/dado"
         app:layout_constraintBottom_toBottomOf="@id/dado"
-        app:layout_constraintHorizontal_bias=".8"/>
+        app:layout_constraintHorizontal_bias=".8"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/btnJ2"
@@ -193,9 +198,9 @@
         android:backgroundTint="@color/beige"
         android:clickable="false"
         android:fontFamily="@font/gilroy_medium"
-        android:text="JUGADOR 2"
+        android:text="@string/text_jugador_2_btn"
         android:textColor="@color/brown"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/solidoJugador2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -206,12 +211,12 @@
     <Button
         android:id="@+id/btnLanzar"
         android:layout_width="130dp"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
         android:backgroundTint="@color/pink"
         android:fontFamily="@font/gilroy_regular"
-        android:text="LANZAR"
+        android:text="@string/text_lanzar_btn"
         android:textColor="@color/brown"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/btnPasar"
         app:layout_constraintEnd_toStartOf="@+id/reiniciar"
         app:layout_constraintStart_toStartOf="parent"
@@ -222,13 +227,12 @@
     <Button
         android:id="@+id/btnPasar"
         android:layout_width="130dp"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
         android:backgroundTint="@color/pink"
         android:fontFamily="@font/gilroy_regular"
-        android:text="PASAR"
+        android:text="@string/text_pasar_btn"
         android:textColor="@color/brown"
-        android:textSize="20dp"
-        android:layout_marginBottom="40dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/reiniciar"
@@ -238,9 +242,10 @@
 
     <ImageView
         android:id="@+id/reiniciar"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:src="@drawable/reload"
+        android:contentDescription="@string/reload_icon_content_description"
         app:layout_constraintBottom_toBottomOf="@+id/btnLanzar"
         app:layout_constraintEnd_toStartOf="@+id/btnPasar"
         app:layout_constraintStart_toEndOf="@+id/btnLanzar"

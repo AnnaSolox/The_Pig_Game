@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="reload_icon_content_description">reload icon</string>
+    <string name="text_pasar_btn">PASS</string>
+    <string name="text_lanzar_btn">ROLL</string>
+    <string name="text_jugador_2_btn">PLAYER 2</string>
+    <string name="ganador_text">WINNER</string>
+    <string name="text_jugador_1_btn">PLAYER 1</string>
+    <string name="imagen_dado_content_description">dice image</string>
+    <string name="mensaje_ganador">Player %1$d wins!</string>
+</resources>
