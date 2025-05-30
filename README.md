@@ -1,12 +1,12 @@
-# 🐷 The Pig Game
+# The Pig Game
 
 ![Screenshot de la app](./the_pig_game.png)
 
-**The Pig Game** es una sencilla implementación del clásico juego de dados para dos jugadores. Cada jugador lanza el dado tantas veces como quiera durante su turno, acumulando puntos. Si obtiene un 1, pierde el turno. El primero que alcance 100 puntos o más gana. 🎲🎉
+**The Pig Game** es una sencilla implementación del clásico juego de dados para dos jugadores. Cada jugador lanza el dado tantas veces como quiera durante su turno, acumulando puntos. Si obtiene un 1, pierde el turno. El primero que alcance 100 puntos o más gana.
 
 ---
 
-## 🚀 Funcionalidades
+## Funcionalidades
 
 - Lanzar dado y sumar puntos al jugador activo.
 - Pasar el turno al siguiente jugador.
@@ -16,10 +16,9 @@
 
 ---
 
-## 🛠 Tecnologías y Librerías
+## Tecnologías y Librerías
 
-![Java](https://img.shields.io/badge/Java-ED8B00?logo=java&logoColor=white)  
-![Android SDK](https://img.shields.io/badge/Android%20SDK-3DDC84?logo=android&logoColor=white)
+![Java](https://img.shields.io/badge/Java-ED8B00?logo=java&logoColor=white) ![Android SDK](https://img.shields.io/badge/Android%20SDK-3DDC84?logo=android&logoColor=white)
 - Lenguaje: Java
 - ViewBinding para manejo eficiente de vistas
 - SDK mínimo: 27
@@ -27,7 +26,7 @@
 
 ---
 
-## 🏗 Estructura del Proyecto
+## Estructura del Proyecto
 
 com.example.thepiggame/
 │
@@ -44,7 +43,7 @@ com.example.thepiggame/
 
 ---
 
-## 🎮 Cómo usar
+## Cómo usar
 
 1. Clona o descarga el repositorio.
 2. Abre el proyecto en Android Studio.
