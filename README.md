@@ -28,6 +28,7 @@
 
 ## Estructura del Proyecto
 
+```
 com.example.thepiggame/
 │
 ├── logic/
@@ -40,7 +41,7 @@ com.example.thepiggame/
 │ └── Dado.java # Dado con mapa de valores e imágenes, lanzamiento aleatorio
 │
 └── MainActivity.java # Actividad principal con la UI y lógica de interacción
-
+```
 ---
 
 ## Cómo usar
