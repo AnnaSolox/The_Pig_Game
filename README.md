@@ -56,8 +56,6 @@ com.example.thepiggame/
 
 ---
 
----
-
 ## Licencia
 Diseñado y desarrollado por AnnaSolox en 2025.
 
