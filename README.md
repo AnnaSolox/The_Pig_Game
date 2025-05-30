@@ -1,6 +1,6 @@
 # The Pig Game
 
-![Screenshot de la app](./the_pig_game.png)
+![Screenshot de la app](./the_pig_game_2.png)
 
 **The Pig Game** es una sencilla implementación del clásico juego de dados para dos jugadores. Cada jugador lanza el dado tantas veces como quiera durante su turno, acumulando puntos. Si obtiene un 1, pierde el turno. El primero que alcance 100 puntos o más gana.
 
