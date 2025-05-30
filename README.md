@@ -6,6 +6,9 @@
 
 ---
 
+## Descargar
+Ve a [Release](./app/release) para descargar la última versión de la APK.
+
 ## Funcionalidades
 
 - Lanzar dado y sumar puntos al jugador activo.
